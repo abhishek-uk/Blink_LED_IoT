@@ -48,7 +48,7 @@ void loop() {
 
   if(ledState == 1) {
     digitalWrite(D0, HIGH);
-  } else if (ledState == 0) {
+  }else if (ledState == 0) {
     digitalWrite(D0, LOW);
   }
 
@@ -56,9 +56,6 @@ void loop() {
   if (statusCode == 200) {
     ledState = ThingSpeak.getFieldAsInt(1);
   }
-
-  // Serial.println(statusCode);
-  // Serial.println(ledState);
 }
 
 void connectWifi() {
