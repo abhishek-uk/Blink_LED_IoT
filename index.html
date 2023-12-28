@@ -6,14 +6,50 @@
     <title>LED Blink</title>
 </head>
 <body>
-    <button onclick="window.location.href ='https://api.thingspeak.com/update?api_key=GEKGR6RNVDOX288A&field1=1';" class="led-button" >LED on </button>
-    <button onclick="window.location.href ='https://api.thingspeak.com/update?api_key=GEKGR6RNVDOX288A&field1=0';" class="led-button" >LED off</button>
+    <div class="container">
+        <!-- <button onclick="window.location.href ='https://api.thingspeak.com/update?api_key=GEKGR6RNVDOX288A&field1=1';" class="led-button" >LED on </button> -->
+        <!-- <button onclick="window.location.href ='https://api.thingspeak.com/update?api_key=GEKGR6RNVDOX288A&field1=0';" class="led-button" >LED off</button> -->
+
+        <button id="LED" onclick="controlSwitch()"></button>
+
+    </div>
 </body>
 </html>
 
 <style>
-    .led-button{
-        width: 50;
-        height: 30;
+    .container{
+        width: 100vw;
+        position: absolute;
+        top: 50%;
+        display: flex;
+        justify-content: center;
+    }
+    button{
+        width: 100px;
+        height: 100px;
+        
     }
 </style>
+
+
+<script>
+
+    var isLEDon = false;
+    
+    document.getElementById("LED").style.backgroundColor  = isLEDon ? "blue" : "yellow"
+    
+
+    function controlSwitch(){
+
+        if (isLEDon){
+            console.log("LED OFF");
+            document.getElementById("LED").style.backgroundColor = "yellow"
+            isLEDon = !isLEDon
+        }else{
+            console.log("LED ON");
+            document.getElementById("LED").style.backgroundColor = "blue"
+            isLEDon = !isLEDon
+        }
+
+    }
+</script>
