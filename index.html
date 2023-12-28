@@ -7,11 +7,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- <button onclick="window.location.href ='https://api.thingspeak.com/update?api_key=GEKGR6RNVDOX288A&field1=1';" class="led-button" >LED on </button> -->
-        <!-- <button onclick="window.location.href ='https://api.thingspeak.com/update?api_key=GEKGR6RNVDOX288A&field1=0';" class="led-button" >LED off</button> -->
-
         <button id="LED" onclick="controlSwitch()"></button>
-
     </div>
 </body>
 </html>
@@ -33,23 +29,37 @@
 
 
 <script>
+    let isLEDon = false;
 
-    var isLEDon = false;
+    document.getElementById("LED").style.backgroundColor  = isLEDon ? "blue" : "yellow";
     
-    document.getElementById("LED").style.backgroundColor  = isLEDon ? "blue" : "yellow"
-    
+    function controlSwitch() {
+        // Toggle the state
+        isLEDon = !isLEDon;
 
-    function controlSwitch(){
+        // Update the LED color
+        document.getElementById("LED").style.backgroundColor = isLEDon ? "blue" : "yellow";
 
-        if (isLEDon){
-            console.log("LED OFF");
-            document.getElementById("LED").style.backgroundColor = "yellow"
-            isLEDon = !isLEDon
-        }else{
-            console.log("LED ON");
-            document.getElementById("LED").style.backgroundColor = "blue"
-            isLEDon = !isLEDon
-        }
+        // Log the current state
+        console.log(isLEDon ? "LED ON" : "LED OFF");
 
+        // Update Thingspeak using AJAX
+        var url = 'https://api.thingspeak.com/update?api_key=GEKGR6RNVDOX288A&field1=' + (isLEDon ? '1' : '0');
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle the response if needed
+                console.log('Thingspeak update successful:', data);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        // console.log(url)
     }
 </script>
